@@ -1,0 +1,41 @@
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# OS stuff
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Dotnet specific
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Core secrets
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.json  # if you want to exclude all env configs (be careful)
+
+# EF Core
+*Migrations/
+
+# Sensitive files
+secrets.json
+.env
+
