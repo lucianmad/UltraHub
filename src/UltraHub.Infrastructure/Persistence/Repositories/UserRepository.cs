@@ -13,27 +13,27 @@ public class UserRepository : IUserRepository
         _context = context;
     }
     
-    public async Task<bool> IsUsernameAvailableAsync(string username)
+    public async Task<bool> IsUsernameAvailableAsync(string username, CancellationToken cancellationToken = default)
     {
-        if (await _context.Users.AnyAsync(x => x.Username == username))
+        if (await _context.Users.AnyAsync(x => x.Username == username, cancellationToken: cancellationToken))
         {
             return false;
         }
         return true;
     }
     
-    public async Task<bool> IsEmailAvailableAsync(string email)
+    public async Task<bool> IsEmailAvailableAsync(string email, CancellationToken cancellationToken = default)
     {
-        if (await _context.Users.AnyAsync(x => x.Email == email))
+        if (await _context.Users.AnyAsync(x => x.Email == email, cancellationToken: cancellationToken))
         {
             return false;
         }
         return true;
     }
 
-    public async Task AddAsync(User user)
+    public async Task AddAsync(User user, CancellationToken cancellationToken = default)
     {
         _context.Users.Add(user);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }

@@ -4,7 +4,7 @@ namespace UltraHub.Application.Common.Interfaces;
 
 public interface IUserRepository
 {
-    Task<bool> IsUsernameAvailableAsync(string username);
-    Task<bool> IsEmailAvailableAsync(string email);
-    Task AddAsync(User user);
+    Task<bool> IsUsernameAvailableAsync(string username, CancellationToken cancellationToken = default);
+    Task<bool> IsEmailAvailableAsync(string email, CancellationToken cancellationToken = default);
+    Task AddAsync(User user, CancellationToken cancellationToken = default);
 }

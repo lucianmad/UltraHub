@@ -22,16 +22,6 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Result<Re
 
     public async Task<Result<RegisterResponseDto>> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        if (!await _userRepository.IsEmailAvailableAsync(request.Email))
-        {
-            return Result<RegisterResponseDto>.Failure("Email is already taken");
-        }
-        
-        if (!await _userRepository.IsUsernameAvailableAsync(request.Username))
-        {
-            return Result<RegisterResponseDto>.Failure("Username is already taken");
-        }
-
         var user = new User
         {
             Email = request.Email,
@@ -41,7 +31,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Result<Re
         
         user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
         
-        await _userRepository.AddAsync(user);
+        await _userRepository.AddAsync(user, cancellationToken);
         
         var token = _jwtService.GenerateToken(user.Id, user.Role, user.Username, user.Email);
         

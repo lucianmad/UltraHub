@@ -5,7 +5,7 @@ using UltraHub.Application.Features.Auth.Commands.Register;
 namespace UltraHub.API.Controllers;
 
 [ApiController]
-[Route("api/auth-controller")]
+[Route("api/auth")]
 public class AuthController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -26,5 +26,4 @@ public class AuthController : ControllerBase
 
         return BadRequest(result.Error);
     }
-    
 }
