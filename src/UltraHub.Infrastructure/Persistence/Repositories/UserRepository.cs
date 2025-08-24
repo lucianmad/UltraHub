@@ -30,6 +30,11 @@ public class UserRepository : IUserRepository
         }
         return true;
     }
+    
+    public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
+    {
+        return await _context.Users.FirstOrDefaultAsync(x => x.Email == email, cancellationToken: cancellationToken);
+    }
 
     public async Task AddAsync(User user, CancellationToken cancellationToken = default)
     {

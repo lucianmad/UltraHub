@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using UltraHub.Application.Features.Auth.Commands.Login;
 using UltraHub.Application.Features.Auth.Commands.Register;
 
 namespace UltraHub.API.Controllers;
@@ -23,7 +24,17 @@ public class AuthController : ControllerBase
         {
             return Ok(result.Value);
         }
-
+        return BadRequest(result.Error);
+    }
+    
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginCommand command)
+    {
+        var result = await _mediator.Send(command);
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
         return BadRequest(result.Error);
     }
 }
