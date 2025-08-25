@@ -31,5 +31,8 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
             .NotEmpty().WithMessage("Password is required")
             .MinimumLength(8).WithMessage("Password should be at least 8 characters long")
             .MaximumLength(50).WithMessage("Password should not exceed 50 characters");
+        
+        RuleFor(u => u.ConfirmPassword)
+            .Equal(u => u.Password).WithMessage("Passwords do not match");
     }
 }

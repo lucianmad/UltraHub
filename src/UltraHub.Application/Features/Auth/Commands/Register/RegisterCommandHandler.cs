@@ -28,7 +28,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Result<Re
             Username = request.Username,
             Role = Role.User
         };
-        
+
         user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
         
         await _userRepository.AddAsync(user, cancellationToken);

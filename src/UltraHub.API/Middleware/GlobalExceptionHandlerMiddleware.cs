@@ -20,9 +20,15 @@ public class GlobalExceptionMiddleware
         {
             await _next(context);
         }
-        catch (ValidationException ex)
+        catch (Exception ex)
         {
             _logger.LogError(ex, "An unhandled exception occurred while processing the request");
+
+            var problem = MapToProblemDetails(ex, context);
+            
+            context.Response.StatusCode = problem.Status ?? 500;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsJsonAsync(problem);
         }
     }
     
