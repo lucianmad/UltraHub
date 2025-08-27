@@ -4,7 +4,6 @@ import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
   imports: [
     FormsModule,
   ],
@@ -12,13 +11,15 @@ import {HttpClient} from '@angular/common/http';
   styleUrl: './login.scss'
 })
 export class Login {
-  email = '';
-  password = '';
+  userObj : any = {
+    "email": '',
+    "password": '',
+  }
 
   private http = inject(HttpClient);
 
   login(){
-    this.http.post('/api/auth/login', {email: this.email, password: this.password})
+    this.http.post('/api/auth/login', this.userObj)
       .subscribe({
         next: (response: any) => {
           console.log('Successfully logged in! Token: ', response.token);

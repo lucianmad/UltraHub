@@ -11,20 +11,22 @@ import {FormsModule} from '@angular/forms';
   styleUrl: './register.scss'
 })
 export class Register {
-  username = '';
-  email = '';
-  password = '';
-  confirmPassword = '';
+  userObj : any = {
+    "username": '',
+    "email": '',
+    "password": '',
+    "confirmPassword": '',
+  };
 
   private http = inject(HttpClient);
 
   register(){
-    this.http.post('api/auth/register', {username: this.username, email: this.email, password: this.password, confirmPassword: this.confirmPassword})
+    this.http.post('api/auth/register', this.userObj)
     .subscribe({
       next: (response : any) => {
-        console.log("Succesfully registered!", response.token);
+        console.log("Successfully registered!", response.token);
       },
-      error: error => {
+      error: (error: any) => {
         console.log("Register failed", error)
       }
     })

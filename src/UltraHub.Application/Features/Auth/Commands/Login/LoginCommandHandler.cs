@@ -22,15 +22,10 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<LoginRes
     public async Task<Result<LoginResponseDto>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
-        if (user is null)
-        {
-            return Result<LoginResponseDto>.Failure("Invalid credentials");
-        }
-
-        if (_passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password) ==
+        if (user is null || _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password) ==
             PasswordVerificationResult.Failed)
         {
-            return Result<LoginResponseDto>.Failure("Invalid password");
+            return Result<LoginResponseDto>.Failure(AuthErrors.InvalidCredentials);
         }
         
         var token = _jwtService.GenerateToken(user.Id, user.Role, user.Username, user.Email);
